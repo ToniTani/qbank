@@ -18,7 +18,7 @@ from django.urls import path
 from questions import views
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    path('house/', admin.site.urls),
 
     # Auth
     path('signup/', views.signupuser, name='signupuser'),
