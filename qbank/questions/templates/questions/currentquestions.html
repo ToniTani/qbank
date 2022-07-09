@@ -3,5 +3,10 @@
 {% block content %}
 
 Current
+<ul>
+  {% for question in questions %}
+  <li>{% if question.important %} <b>{% endif %}{{ question.question }}{% if question.important %}</b>{% endif %}</li>
+  {% endfor %}
+</ul>
 
 {% endblock %}

@@ -28,4 +28,5 @@ urlpatterns = [
     # Questions
     path('', views.home, name='home'),
     path('current/', views.currentquestions, name='currentquestions'),
+    path('create/', views.createquestion, name='createquestion'),
 ]

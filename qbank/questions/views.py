@@ -3,9 +3,11 @@ from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
 from django.db import IntegrityError
 from django.contrib.auth import login, logout, authenticate
+from .forms import CreateQuestion
+from .models import Question
 
 def home(request):
-    return render(request, 'questions/home.html'
+    return render(request, 'questions/home.html')
 
 def signupuser(request):
     if request.method == 'GET':
@@ -34,11 +36,28 @@ def loginuser(request):
         else:
             login(request, user)
             return redirect('currentquestions')
-            
+
 def logoutuser(request):
     if request.method == 'POST':
             logout(request)
             return redirect('home')
 
 def currentquestions(request):
-    return render(request, 'questions/currentquestions.html')
+    questions = Question.objects.filter(user=request.user, datecompleted__isnull=True)
+    # questions = Question.objects.filter(user=request.user)
+    # questions = Question.objects.all()
+    return render(request, 'questions/currentquestions.html', {'questions':questions})
+
+
+def createquestion(request):
+    if request.method == 'GET':
+        return render(request, 'questions/createquestion.html', {'form':CreateQuestion()})
+    else:
+        try:
+            form = CreateQuestion(request.POST)
+            newquestion= form.save(commit=False)
+            newquestion.user = request.user
+            newquestion.save()
+            return redirect('currentquestions')
+        except ValueError:
+            return render(request, 'questions/createquestion.html', {'form':CreateQuestion(), 'error': 'Bad data inserted. Please try again!'})
