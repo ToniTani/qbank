@@ -5,7 +5,12 @@
 Current
 <ul>
   {% for question in questions %}
-  <li>{% if question.important %} <b>{% endif %}{{ question.question }}{% if question.important %}</b>{% endif %}</li>
+  <li>
+    <a href="{% 'viewquestion' question.id %}">
+    {% if question.important %} <b>{% endif %}{{ question.question }}{% if question.important %}</b>{% endif %}
+    {% if question.answer %} - {{ question.answer }}{% endif %}
+    </a>
+  </li>
   {% endfor %}
 </ul>
 

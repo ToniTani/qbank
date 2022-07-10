@@ -1,0 +1,25 @@
+{% extends 'questions/base.html' %}
+
+{% block content %}
+
+{{ error }}
+
+{{ question.question }}
+
+<form method="POST">
+  {% csrf_token %}
+  {{ form.as_p }}
+<button type="submit" name="button">Save</button>
+</form>
+
+<form method="POST" action="{% url 'completequestion' question.id %}">
+  {% csrf_token %}
+<button type="submit" name="button">Complete</button>
+</form>
+
+<form method="POST" action="{% url 'deletequestion' question.id %}">
+  {% csrf_token %}
+<button type="submit" name="button">Delete</button>
+</form>
+
+{% endblock %}

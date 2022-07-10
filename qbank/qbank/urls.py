@@ -29,4 +29,7 @@ urlpatterns = [
     path('', views.home, name='home'),
     path('current/', views.currentquestions, name='currentquestions'),
     path('create/', views.createquestion, name='createquestion'),
+    path('questions/<int:question_pk>', views.viewquestion, name='viewquestion'),
+    path('questions/<int:question_pk/complete>', views.completequestion, name='completequestion'),
+    path('questions/<int:question_pk/delete>', views.deletequestion, name='deletequestion'),
 ]

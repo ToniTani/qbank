@@ -1,10 +1,11 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
 from django.db import IntegrityError
 from django.contrib.auth import login, logout, authenticate
 from .forms import CreateQuestion
 from .models import Question
+from django.utils import timezone
 
 def home(request):
     return render(request, 'questions/home.html')
@@ -48,6 +49,18 @@ def currentquestions(request):
     # questions = Question.objects.all()
     return render(request, 'questions/currentquestions.html', {'questions':questions})
 
+def viewquestion(request, question_pk):
+    question = get_object_or_404(Question, pk=question_id, user=request.user)
+    if request.method == 'GET':
+        form = CreateQuestion(instance=question)
+        return render(request, 'questions/viewquestion.html',{'question':question, 'form':form})
+    else:
+        try:
+            form = CreateQuestion(request.POST, instance=question)
+            form.save()
+            return redirect('currentquestions')
+        except ValueError:
+            return render(request, 'questions/viewquestion.html', {'question':question, 'form':form, 'error':'Bad input!'})
 
 def createquestion(request):
     if request.method == 'GET':
@@ -61,3 +74,16 @@ def createquestion(request):
             return redirect('currentquestions')
         except ValueError:
             return render(request, 'questions/createquestion.html', {'form':CreateQuestion(), 'error': 'Bad data inserted. Please try again!'})
+
+def completequestion(request, question_pk):
+    question = get_object_or_404(Question, pk=question_id, user=request.user)
+    if request.method == 'POST':
+        question.datecompleted = timezone.now()
+        question.save()
+        return redirect('currentquestions')
+
+def deletequestion(request, question_pk):
+    question = get_object_or_404(Question, pk=question_id, user=request.user)
+    if request.method == 'POST':       
+        question.delete()
+        return redirect('currentquestions')
