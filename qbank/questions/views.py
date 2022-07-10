@@ -6,6 +6,7 @@ from django.contrib.auth import login, logout, authenticate
 from .forms import CreateQuestion
 from .models import Question
 from django.utils import timezone
+from django.contrib.auth.decorators import login_required
 
 def home(request):
     return render(request, 'questions/home.html')
@@ -27,6 +28,7 @@ def signupuser(request):
             return render(request, 'questions/signupuser.html', {'form':UserCreationForm(), 'error':'Passwords did not match' })
             # User doesnt match
 
+
 def loginuser(request):
     if request.method == 'GET':
         return render(request, 'questions/loginuser.html', {'form':AuthenticationForm()})
@@ -38,17 +40,20 @@ def loginuser(request):
             login(request, user)
             return redirect('currentquestions')
 
+@login_required
 def logoutuser(request):
     if request.method == 'POST':
             logout(request)
             return redirect('home')
 
+@login_required
 def currentquestions(request):
     questions = Question.objects.filter(user=request.user, datecompleted__isnull=True)
     # questions = Question.objects.filter(user=request.user)
     # questions = Question.objects.all()
     return render(request, 'questions/currentquestions.html', {'questions':questions})
 
+@login_required
 def viewquestion(request, question_pk):
     question = get_object_or_404(Question, pk=question_id, user=request.user)
     if request.method == 'GET':
@@ -62,6 +67,7 @@ def viewquestion(request, question_pk):
         except ValueError:
             return render(request, 'questions/viewquestion.html', {'question':question, 'form':form, 'error':'Bad input!'})
 
+@login_required
 def createquestion(request):
     if request.method == 'GET':
         return render(request, 'questions/createquestion.html', {'form':CreateQuestion()})
@@ -75,6 +81,7 @@ def createquestion(request):
         except ValueError:
             return render(request, 'questions/createquestion.html', {'form':CreateQuestion(), 'error': 'Bad data inserted. Please try again!'})
 
+@login_required
 def completequestion(request, question_pk):
     question = get_object_or_404(Question, pk=question_id, user=request.user)
     if request.method == 'POST':
@@ -82,8 +89,14 @@ def completequestion(request, question_pk):
         question.save()
         return redirect('currentquestions')
 
+@login_required
 def deletequestion(request, question_pk):
     question = get_object_or_404(Question, pk=question_id, user=request.user)
-    if request.method == 'POST':       
+    if request.method == 'POST':
         question.delete()
         return redirect('currentquestions')
+
+@login_required
+def listedquestions(request):
+    questions = Question.objects.filter(user=request.user, datecompleted__isnull=False).order_by('-datecompleted')
+    return render(request, 'questions/listedquestions.html', {'questions':questions})

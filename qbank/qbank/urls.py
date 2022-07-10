@@ -28,6 +28,7 @@ urlpatterns = [
     # Questions
     path('', views.home, name='home'),
     path('current/', views.currentquestions, name='currentquestions'),
+    path('list/', views.listedquestions, name='listedquestions'),
     path('create/', views.createquestion, name='createquestion'),
     path('questions/<int:question_pk>', views.viewquestion, name='viewquestion'),
     path('questions/<int:question_pk>/complete>', views.completequestion, name='completequestion'),

@@ -1,0 +1,18 @@
+{% extends 'questions/base.html' %}
+
+{% block content %}
+
+Comlpete List of Questions and Answers
+<ul>
+  {% for question in questions %}
+  <li>
+    <a href="{% 'viewquestion' question.id %}">
+    {% if question.important %} <b>{% endif %}{{ question.question }}{% if question.important %}</b>{% endif %}
+    {% if question.answer %} - {{ question.answer }}{% endif %}
+    {{  question.datecompleted|date: 'M j Y H:i' }}
+    </a>
+  </li>
+  {% endfor %}
+</ul>
+
+{% endblock %}

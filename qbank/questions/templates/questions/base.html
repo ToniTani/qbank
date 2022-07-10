@@ -3,7 +3,9 @@
 
 Logged in as {{ user.username }}
 
-<a href="{% url 'logoutuser' %}">Logout</a>
+<a href="{% url 'createquestion' %}">Create</a>
+<a href="{% url 'currentquestions' %}">Current</a>
+<a href="{% url 'listedquestions' %}">List</a>
 
 <form action="{% url 'logoutuser' %}" method="POST">
   {% csrf_token %}
