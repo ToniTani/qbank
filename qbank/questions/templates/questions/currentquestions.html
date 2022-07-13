@@ -16,7 +16,7 @@
         {% if questions %}
             <div class="list-group">
                 {% for question in questions %}
-                    <a href="{% url 'viewquestion' question.id %}" class="list-group-item list-group-item-action{% if question.important %} list-group-item-danger{% endif %}"><b>{{ question.question }}</b>{% if question.answer %} - {{ question.answer|truncatechars:30 }}{% endif %}</a>
+                    <a href="{% url 'viewquestion' question.id %}" class="list-group-item list-group-item-action{% if question.important %} list-group-item-danger{% endif %}"><b>{{ question.questiontitle }}</b>{% if question.answer %} - {{ question.answer|truncatechars:30 }}{% endif %}</a>
                 {% endfor %}
             </div>
         {% else %}

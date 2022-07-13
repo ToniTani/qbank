@@ -4,4 +4,4 @@ from .models import Question
 class CreateQuestion(ModelForm):
     class Meta:
         model = Question
-        fields = ['question', 'answer', 'important']
+        fields = ['questiontitle', 'answer', 'important']

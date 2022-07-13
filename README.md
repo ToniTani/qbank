@@ -1,2 +1,2 @@
 # qbank
- django 3 questiion bank project
+django 3 question bank project

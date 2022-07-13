@@ -58,7 +58,7 @@ def viewquestion(request, question_pk):
     question = get_object_or_404(Question, pk=question_id, user=request.user)
     if request.method == 'GET':
         form = CreateQuestion(instance=question)
-        return render(request, 'questions/viewquestion.html',{'question':question, 'form':form})
+        return render(request, 'questions/viewquestion.html', {'question':question, 'form':form})
     else:
         try:
             form = CreateQuestion(request.POST, instance=question)

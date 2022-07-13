@@ -15,7 +15,7 @@
 <body>
 
 
-<nav class="navbar navbar-expand-md navbar-light bg-warning">
+<nav class="navbar navbar-expand-md navbar-dark bg-dark">
 <div class="container">
     <a class="navbar-brand" href="{% url 'home' %}">
          <img src="{% static 'qbank/logo.png' %}" width="30" height="30" class="d-inline-block align-top">
@@ -32,7 +32,7 @@
                     <a class="nav-link" href="{% url 'currentquestions' %}">Current</a>
                 </li>
                 <li class="nav-item {{ list }}">
-                    <a class="nav-link" href="{% url 'list' %}">List</a>
+                    <a class="nav-link" href="{% url 'listedquestions' %}">List</a>
                 </li>
                 <li class="nav-item {{ create }}">
                     <a class="nav-link" href="{% url 'createquestion' %}">Create</a>
@@ -42,7 +42,7 @@
     {% endif %}
     <ul class="navbar-nav ml-auto">
             {% if user.is_authenticated %}
-                <li class="nav-item">
+                <li class="nav-item">w
                     <a href="#" onclick="$('#signOutBtn').click()" class="nav-link">Logout</a>
                     <form style='display: none;' method="POST" action="{% url 'logoutuser' %}">
                         {% csrf_token %}
