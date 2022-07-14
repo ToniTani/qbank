@@ -4,7 +4,7 @@ Django 4 question bank project. Store questions and answers for the future.
 
 ## Clone the repository
 
-https://github.com/ToniTani/qbank.git
+git clone https://github.com/ToniTani/qbank.git
 
 ## Installation
 
