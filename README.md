@@ -14,15 +14,15 @@ For development, you will need Python 3 and Django (4) installed on your compute
 
 Run commands below, inside manage.py folder. This will create your local sqlite3 database.
 
-$ python manage.py makemigrations
-$ python manage.py migrate
+      $ python manage.py makemigrations
+      $ python manage.py migrate
 
 ## Create a new superuser
 
-$ python manage.py createsuperuser
+      $ python manage.py createsuperuser
 
 ## Run development server
 
-$ python manage.py runserver
+      $ python manage.py runserver
 
 # Enjoy!
